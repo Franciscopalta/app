@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>VentaFlow IA - Digitalización Premium</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#020617">
+    
+    <!-- Configuración para iOS (Apple) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="VentaFlow IA">
+    <link rel="apple-touch-icon" href="https://files.oaiusercontent.com/file-h5Wst2uCAnFByOqf6Sj6kL?se=2025-02-21T16%3A58%3A18Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D0355f30e-562a-442a-9289-5360c7f39441.webp&sig=6Y4v8r5/N7R1W8p03K5y%2BT7O1zD0O1K8qL0P8m1o%3D">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+            --luxury-bezier: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: contain;
+            background-color: #020617;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .bg-glow-1 {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+            z-index: -1;
+            filter: blur(60px);
+            animation: moveGlow 20s infinite alternate;
+        }
+
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            left: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0) 70%);
+            z-index: -1;
+            filter: blur(80px);
+            animation: moveGlow 25s infinite alternate-reverse;
+        }
+
+        @keyframes moveGlow {
+            from { transform: translate(0, 0); }
+            to { transform: translate(10%, 10%); }
+        }
+
+        @keyframes gradient-x {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 3s ease infinite;
+        }
+        
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s var(--luxury-bezier);
+            will-change: transform, opacity;
+        }
+        
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to bottom right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .premium-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--luxury-bezier);
+        }
+
+        .premium-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .premium-button:active::after {
+            opacity: 1;
+        }
+
+        /* Ocultar barra de scroll para Chrome/Safari */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Ocultar barra de scroll para IE/Edge/Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="selection:bg-indigo-500/30">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+    <script>
+      let swRegistration = null;
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then(reg => {
+            swRegistration = reg;
+            console.log('VentaFlow SW Activo');
+            
+            reg.onupdatefound = () => {
+              const installingWorker = reg.installing;
+              installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  window.location.reload();
+                }
+              };
+            };
+          });
+        });
+
+        // Verificar actualizaciones al volver a la app o cambiar de pestaña
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible' && swRegistration) {
+            swRegistration.update();
+          }
+        });
+      }
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

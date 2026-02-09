@@ -1,0 +1,27 @@
+
+{
+  "name": "VentaFlow IA",
+  "short_name": "VentaFlow",
+  "description": "Digitalización Premium potenciada por Inteligencia Artificial.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "orientation": "portrait",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "https://files.oaiusercontent.com/file-h5Wst2uCAnFByOqf6Sj6kL?se=2025-02-21T16%3A58%3A18Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D0355f30e-562a-442a-9289-5360c7f39441.webp&sig=6Y4v8r5/N7R1W8p03K5y%2BT7O1zD0O1K8qL0P8m1o%3D",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.oaiusercontent.com/file-h5Wst2uCAnFByOqf6Sj6kL?se=2025-02-21T16%3A58%3A18Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D0355f30e-562a-442a-9289-5360c7f39441.webp&sig=6Y4v8r5/N7R1W8p03K5y%2BT7O1zD0O1K8qL0P8m1o%3D",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "shopping", "technology"]
+}
